@@ -1,0 +1,3 @@
+# packages.txt
+fonts-noto
+fonts-noto-cjk
