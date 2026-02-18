@@ -91,20 +91,21 @@ def get_next_id(df):
 
 
 def safe_parse_date(date_value, default_date=None):
-    """تبدیل امن تاریخ با مدیریت مقادیر خالی و نامعتبر"""
+    """تبدیل امن تاریخ با مدیریت مقادیر خالی و نامعتبر - سازگار با Python 3.12+"""
     if default_date is None:
         default_date = datetime.now().date()
     
-    if pd.isna(date_value) or date_value is None or date_value == '':
+    if date_value is None or (isinstance(date_value, float) and pd.isna(date_value)) or date_value == '':
         return default_date
     
     try:
-        # اگر از نوع datetime یا date است
         if isinstance(date_value, (datetime, pd.Timestamp)):
-            return date_value.date()
-        # اگر رشته است
+            return date_value.date() if hasattr(date_value, 'date') else date_value
         elif isinstance(date_value, str):
-            return pd.to_datetime(date_value).date()
+            parsed = pd.to_datetime(date_value, errors='coerce')
+            if pd.notna(parsed):
+                return parsed.date()
+            return default_date
         else:
             return default_date
     except:
