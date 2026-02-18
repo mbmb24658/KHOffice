@@ -1,0 +1,27 @@
+# .gitignore
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+.venv
+*.egg-info/
+dist/
+build/
+
+# پوشه‌های داده که نباید در git باشند
+data/
+history/
+reports/
+backups/
+without_owner/
+analysis_output/
+
+# فایل‌های موقت
+*.xlsx~
+*.bak
+*.tmp
+.DS_Store
